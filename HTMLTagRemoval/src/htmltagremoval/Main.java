@@ -9,7 +9,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileView;
 
@@ -145,7 +148,18 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-        
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        String filename = f.getAbsolutePath();
+        try {
+            FileReader reader = new FileReader(filename);
+            BufferedReader br = new BufferedReader(reader);
+            jTextArea1.read(br, null);
+            br.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_jButton2MouseClicked
 
     /**
@@ -182,10 +196,9 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    public static String htmlTagRemoval(String code){
-        String clean =  code.replaceAll("\\<.*?>","");
+
+    public static String htmlTagRemoval(String code) {
+        String clean = code.replaceAll("\\<.*?>", "");
         System.out.println(clean);
         return clean;
     }
